@@ -1,0 +1,53 @@
+<aura:component controller="ContactController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+
+<lightning:card iconName="standard:contact" title="Contact List">
+    <lightning:button label="New" onclick="{! c.handleClick }"/>
+
+<lightning:input type="search" 
+                 lable="Search" 
+                 placeholder="Search from Contacts" 
+                 aura:id="SearchBox"
+                 onchange="{!c.searchTable}" /> 
+</lightning:card>
+
+      <br></br>
+<!--  <div class="slds-col slds-size_1-of-8 allBtn">
+        <lightning:button label="Delete Selected"
+                                              iconName="utility:delete"
+                                              iconPosition="left"
+                                              variant="brand"
+                                              onclick="{!c.doDelete}">
+                            </lightning:button></div>  -->
+  
+
+    <aura:attribute  name="contact" type="object"/>    
+    <aura:attribute name="columns" type="List"/>    
+    
+    <aura:attribute name="allData" type="List" />
+    
+    <aura:attribute name="sortedBy" type="String" default="Name"/>
+    <aura:attribute name="sortedDirection" type="string" default="asc" />
+
+
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+    <!-- handlers-->
+
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:handler event="force:refreshView" action="{! c.init}"/> 
+    
+        
+    <lightning:datatable aura:id="conTable"  
+                data="{! v.contact }"     
+                         columns="{! v.columns }"     
+                         keyField="Id"    
+                         hideCheckboxColumn="false"  
+                         onsave="{! c.onSave }"
+                         onsort="{!c.updateSorting}"
+                         sortedBy="{!v.sortedBy}"
+                         sortedDirection="{!v.sortedDirection}"
+                         onrowaction="{!c.handleRowAction}"
+                         
+                         onrowselection="{!c.doselectedRecord}"
+                         />        
+    
+</aura:component>
