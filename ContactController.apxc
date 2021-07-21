@@ -1,0 +1,26 @@
+public class ContactController {
+ 
+ 
+   @AuraEnabled
+    public static void deleteContact(Contact cont){
+    delete  cont;
+    }
+   
+    
+    @AuraEnabled    
+    public static List < Contact > getContacts() {         
+    return [ SELECT Id, Name, FirstName, LastName, Phone,Email FROM Contact];        
+    }    
+      
+    @AuraEnabled    
+    public static boolean updatecontacts( List < Contact > updatedContactList ) {       
+        try {  
+            update updatedContactList;  
+            return true;  
+              
+        } catch(Exception e) {  
+          
+            return false;          
+        }  
+    }     
+}
